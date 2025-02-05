@@ -30,7 +30,6 @@ const TodoPage = () => {
   }
 
   const handleSave = async () => {
-    // @todo IMPLEMENT HERE : SAVE THE TASK & REFRESH ALL THE TASKS, DON'T FORGET TO ATTACH THE FUNCTION TO THE APPROPRIATE BUTTON
     try {
       await api.post('/tasks', { name: newTaskName });
       await handleFetchTasks();
@@ -38,7 +37,16 @@ const TodoPage = () => {
     } catch (error) {
       console.error('Failed to save task:', error);
     }
-  }
+  };
+
+  const handleUpdate = async (id: number, name: string) => {
+    try {
+      await api.patch(`/tasks/update/${id}`, { name, updatedAt: new Date() });
+      await handleFetchTasks();
+    } catch (error) {
+      console.error('Failed to update task:', error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
